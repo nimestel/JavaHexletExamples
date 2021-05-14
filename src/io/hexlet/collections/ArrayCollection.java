@@ -123,6 +123,8 @@ public class ArrayCollection<T> implements Collection<T> {
     private class ElementsIterator implements Iterator<T> {
         private int index = 0;
 
+        private boolean wasNextCalled = false;
+
         @Override
         public boolean hasNext() {
             return ArrayCollection.this.size > index;
@@ -133,7 +135,15 @@ public class ArrayCollection<T> implements Collection<T> {
             if (!hasNext()) {
                 throw new NoSuchElementException();
             }
+            wasNextCalled = true;
             return ArrayCollection.this.array[index++];
+        }
+
+        @Override
+        public void remove() throws IllegalStateException {
+            if (!wasNextCalled) throw new IllegalStateException();
+            wasNextCalled = false;
+            ArrayCollection.this.remove(--index);
         }
     }
 }
