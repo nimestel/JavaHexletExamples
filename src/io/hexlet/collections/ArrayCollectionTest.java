@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.NoSuchElementException;
 import java.util.Random;
@@ -375,4 +376,91 @@ public class ArrayCollectionTest {
         assertTrue(testInstance.isEmpty());
         assertEquals(0, testInstance.size());
     }
+
+
+    @Test
+    public void testToArrayWhenInputArrayIsNull() {
+        final Collection<Object> testInstance = new ArrayCollection<>();
+        testInstance.add("a");
+        testInstance.add("b");
+        testInstance.add("c");
+
+        final String[] input = null;
+        try {
+            testInstance.toArray(input);
+            fail("The toArray method does not throw an exception when the incoming array is null.");
+        } catch (final NullPointerException e) {}
+    }
+
+    @Test
+    public void testToArrayWhenInputArrayHaveOtherType() {
+        final Collection<String> testInstance = new ArrayCollection<>();
+        testInstance.add("a");
+        testInstance.add("b");
+        testInstance.add("c");
+
+        final Integer[] input = new Integer[3];
+        try {
+            testInstance.toArray(input);
+            fail("The toArray method does not throw an exception when the incoming array is of a different type.");
+        } catch (final ArrayStoreException e) {}
+    }
+
+    @Test
+    public void testToArrayWhenInputArrayHaveSizeOne() {
+        final Collection<Integer> testInstance = new ArrayCollection<>();
+        testInstance.add(1);
+        testInstance.add(2);
+        testInstance.add(3);
+
+        final Integer[] input = new Integer[1];
+
+        final Integer[] result = testInstance.toArray(input);
+        assertNotEquals(input, result);
+        assertEquals((Integer)1, result[0]);
+        assertEquals((Integer)2, result[1]);
+        assertEquals((Integer)3, result[2]);
+        assertEquals(3, result.length);
+    }
+
+    @Test
+    public void testToArrayWhenInputArrayHaveIdenticalSize() {
+        Random r = new Random();
+
+        final Collection<Integer> testInstance = new ArrayCollection<>();
+        final Integer[] controlArray = {r.nextInt(99)
+                , r.nextInt(99)
+                , r.nextInt(99)
+                , r.nextInt(99)
+                , r.nextInt(99)};
+
+        testInstance.addAll(Arrays.asList(controlArray));
+
+
+        final Integer[] input = new Integer[testInstance.size()];
+
+        final Integer[] result = testInstance.toArray(input);
+        assertArrayEquals(input, result);
+        assertArrayEquals(input, controlArray);
+        assertArrayEquals(controlArray, result);
+    }
+
+    @Test
+    public void testToArrayWhenInputArrayBiggest() {
+        final Collection<Integer> testInstance = new ArrayCollection<>();
+        testInstance.add(1);
+        testInstance.add(2);
+        testInstance.add(3);
+
+        final Integer[] input = new Integer[4];
+
+        final Integer[] result = testInstance.toArray(input);
+        assertArrayEquals(input, result);
+        assertEquals((Integer)1, result[0]);
+        assertEquals((Integer)2, result[1]);
+        assertEquals((Integer)3, result[2]);
+        assertNull(result[3]);
+        assertEquals(4, result.length);
+    }
+
 }

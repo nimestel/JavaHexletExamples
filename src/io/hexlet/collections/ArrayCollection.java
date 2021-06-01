@@ -42,14 +42,17 @@ public class ArrayCollection<T> implements Collection<T> {
     }
 
     @Override
-    public <T1> T1[] toArray(T1[] a) {
-        if (a.length >= size) {
-            System.arraycopy(array, 0, a, 0, size);
-            return a;
+    public <T> T[] toArray(T[] a) {
+        if (a.length < size) {
+            return (T[]) Arrays.copyOf(array, size, a.getClass());
         }
-        T1[] arrayNew = (T1[]) new Object[size];
-        System.arraycopy(array, 0, arrayNew, 0, size);
-        return arrayNew;
+
+        System.arraycopy(array, 0, a, 0, size);
+
+        if (a.length > size)
+            a[size] = null;
+
+        return a;
     }
 
     @Override
