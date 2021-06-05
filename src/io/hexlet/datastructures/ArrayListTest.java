@@ -1,4 +1,4 @@
-package io.hexlet.collections;
+package io.hexlet.datastructures;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
