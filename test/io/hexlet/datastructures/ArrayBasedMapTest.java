@@ -1166,4 +1166,17 @@ public class ArrayBasedMapTest {
     private static Entry<String, Student> mapEntry(String key, Student value) {
         return Collections.singletonMap(key, value).entrySet().iterator().next();
     }
+
+
+    @Test
+    public void testGetOrDefaultInEmptyMap() {
+        final Map<String, Student> map;
+
+        map = makeEmptyMap();
+
+        assertEquals("Not found", map.getOrDefault(getKeyNotInPopulatedMap(),
+                new Student("Not found")).getUuid());
+
+        assertInvariants(map);
+    }
 }

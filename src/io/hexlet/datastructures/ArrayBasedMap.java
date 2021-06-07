@@ -62,6 +62,14 @@ public class ArrayBasedMap<K, V> implements Map<K, V> {
     }
 
     @Override
+    public V getOrDefault(Object key, V defaultValue) {
+        // BEGIN (write your solution here)
+        V result = get(key);
+        return result == null ? defaultValue : result;
+        // END
+    }
+
+    @Override
     public V put(K key, V value) {
         // BEGIN (write your solution here)
         V result = value;
