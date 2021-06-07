@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import io.hexlet.datastructures.data.Student;
+import io.hexlet.datastructures.model.Student;
 import org.junit.Test;
 
 

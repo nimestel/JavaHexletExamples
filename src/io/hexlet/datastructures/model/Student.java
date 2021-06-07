@@ -1,4 +1,4 @@
-package io.hexlet.datastructures.data;
+package io.hexlet.datastructures.model;
 
 public class Student {
 
